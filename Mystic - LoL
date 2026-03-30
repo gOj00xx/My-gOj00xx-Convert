@@ -1,6 +1,6 @@
--- Script By 00de0l
+-- Script By s3cret_proj3ct
+-- Yippie Yippie Converter!
 
--- [SAFE INIT] Fix nil arithmetic error
 local rot4 = rot4 or 0
 local rot5 = rot5 or 0
 local rot1 = rot1 or 0
